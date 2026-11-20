@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Token Launch Radar — pre-token protocols ranked by implied value</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <div class="mark">◉</div>
+    <div>
+      <h1>Token Launch Radar</h1>
+      <p class="sub">Pre-token protocols, ranked by what their launch would be worth. Snapshot: <span id="asof">—</span> · Source: <span id="source">—</span></p>
+    </div>
+  </div>
+  <div class="stats" id="stats"></div>
+</header>
+
+<section class="method">
+  <h2>How the value is priced</h2>
+  <p>Implied value = <strong>TVL × category multiple × growth × maturity × breadth</strong>. The category multiple is the
+  <strong>median market-cap-per-TVL of the live-token protocols in that category</strong> (the global median where a category
+  has fewer than 3 live protocols; clamped to 0.05–1.50). Growth clamps the 7-day TVL change to −50…+100% and counts 40% of it.
+  Maturity rises with the protocol's age up to 3 years. Breadth adds 2% per extra chain, to 10%. Nothing here is a hardcoded list
+  of names: the same formula scores every row, and the live-token set that calibrates it is shown on the Live tab.</p>
+</section>
+
+<nav class="tabs" id="tabs">
+  <button data-tab="board" class="active">Board</button>
+  <button data-tab="live">Live tokens <span id="livecount"></span></button>
+</nav>
+
+<section class="controls" id="controls">
+  <input id="q" type="search" placeholder="Search name or slug…" aria-label="Search protocols">
+  <select id="category" aria-label="Filter by category"><option value="">All categories</option></select>
+  <select id="chain" aria-label="Filter by chain"><option value="">All chains</option></select>
+  <label class="check"><input id="watchonly" type="checkbox"> Watchlist only</label>
+  <select id="sort" aria-label="Sort board">
+    <option value="implied">Sort: implied value ↓</option>
+    <option value="tvl">Sort: TVL ↓</option>
+    <option value="growth">Sort: 7-day change ↓</option>
+    <option value="age">Sort: age ↓</option>
+    <option value="name">Sort: name A–Z</option>
+  </select>
+  <span class="count" id="count"></span>
+</section>
+
+<main>
+  <section id="boardview">
+    <table id="board">
+      <thead>
+        <tr>
+          <th class="num">#</th>
+          <th>Protocol</th>
+          <th>Category</th>
+          <th>Chains</th>
+          <th class="num">TVL</th>
+          <th class="num">7d</th>
+          <th class="num">Multiple</th>
+          <th class="num">Implied value</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <p class="hint">Click any row for its detail view and farm plan.</p>
+  </section>
+
+  <section id="liveview" hidden>
+    <p class="note">These protocols already have a token that trades, so the board shows the market's own value for them, not a model's.
+    They are the comparables: their market-cap-per-TVL medians price the pre-token board.</p>
+    <table id="livetable">
+      <thead>
+        <tr>
+          <th>Protocol</th>
+          <th>Category</th>
+          <th>Chains</th>
+          <th class="num">TVL</th>
+          <th class="num">Market cap</th>
+          <th class="num">7d</th>
+        </tr>
+      </thead>
+      <tbody id="liverows"></tbody>
+    </table>
+  </section>
+
+  <section id="detail" hidden>
+    <button id="closedetail" class="close">← Back to the board</button>
+    <div id="detailbody"></div>
+  </section>
+</main>
+
+<footer>
+  <p>Data: sealed DefiLlama snapshot, fetched once for this competition. The board covers the whole watchlist (40 protocols at or
+  above $50M TVL with no token) plus every other rankable pre-token protocol below the floor. Implied values are a model's
+  estimate from the snapshot's own figures, not a price and not investment advice. Farm plans describe on-chain actions;
+  never pay anyone to claim an airdrop.</p>
+</footer>
+
+<script src="../data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
